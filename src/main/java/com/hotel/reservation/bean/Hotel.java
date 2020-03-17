@@ -7,8 +7,13 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
-@Document(indexName = "hotel",type = "_doc", createIndex = false)
+@Document(indexName = "hotel", type = "_doc", createIndex = false)
 public class Hotel {
 
 	@Id
@@ -24,7 +29,7 @@ public class Hotel {
 
 	private boolean isFreeWifi;
 
-	private List<Room> rooms;
+	private List<String> roomIds;
 
 	private String destination;
 

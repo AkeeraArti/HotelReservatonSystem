@@ -5,12 +5,17 @@ import java.util.Date;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class BookedRoomResponse implements Serializable{
 
 	private String roomType;
 
-	private Integer roomNo;
+	private Integer roomId;
 
 	private String hotelId;
 

@@ -3,6 +3,11 @@ package com.hotel.reservation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author arti
+ *
+ */
+
 @SpringBootApplication
 public class HotelReservationApplication {
 

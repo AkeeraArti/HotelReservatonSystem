@@ -1,0 +1,8 @@
+PUT room/_doc/9b11b66b-b93e-47ce-b7e3-fad194840d3c
+{
+          "roomId" : "9b11b66b-b93e-47ce-b7e3-fad194840d3c",
+          "roomType" : "Single",
+          "status" : "available",
+          "hotelId":"2d86b5f7-60bf-44f9-9dda-650c3a58e2a0",
+          "price" : "3000"
+}

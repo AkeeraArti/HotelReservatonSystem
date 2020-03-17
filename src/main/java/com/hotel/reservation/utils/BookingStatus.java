@@ -1,5 +1,10 @@
 package com.hotel.reservation.utils;
 
+/**
+ * @author arti
+ *
+ */
+
 public enum BookingStatus {
 
 	RESERVE("reserve"), AVAILABLE("available");

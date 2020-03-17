@@ -1,5 +1,10 @@
 package com.hotel.reservation.utils;
 
+/**
+ * @author arti
+ *
+ */
+
 public enum UserType {
 
 	SUPER_ADMIN("super admin"), ADMIN("admin"), VISITOR("visitor");

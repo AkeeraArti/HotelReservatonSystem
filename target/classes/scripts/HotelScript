@@ -1,0 +1,12 @@
+PUT account/_doc/2d86b5f7-60bf-44f9-9dda-650c3a58e2a0
+{
+          "id" : "2d86b5f7-60bf-44f9-9dda-650c3a58e2a0",
+          "name" : "Paradize",
+          "star" : 4,
+          "location" : "185, Hosur Rd, Bengaluru, Karnataka 560029, India",
+          "poolAvailable" : true,
+          "freeWifi":true,
+          "roomIds" : ["9b11b66b-b93e-47ce-b7e3-fad194840d3c"],
+          "destination":"super admin"
+}
+

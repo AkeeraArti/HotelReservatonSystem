@@ -26,6 +26,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+/**
+ * @author arti
+ *
+ */
+
 @RestController
 @RequestMapping("/")
 public class HotelReservationController {
@@ -39,23 +44,31 @@ public class HotelReservationController {
 	@PostMapping("create/account")
 	@ApiOperation(value = "Create account", response = AccountResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account created successfully") })
-	public ResponseEntity<AccountResponse> createAccount(@RequestBody AccountRequest request) throws HotelReservationException {
+	public ResponseEntity<AccountResponse> createAccount(@RequestBody AccountRequest request)
+			throws HotelReservationException {
 
 		AccountResponse response = service.createAccount(request);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 
+	/*
+	 * register user account for the hotel
+	 */
 	@PostMapping("register/user")
 	@ApiOperation(value = "Register user", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Register user successfully") })
-	public ResponseEntity<String> registerUser(@RequestBody UserRegisterRequest request) throws HotelReservationException {
+	public ResponseEntity<String> registerUser(@RequestBody UserRegisterRequest request)
+			throws HotelReservationException {
 
 		String response = service.registerUser(request);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 
+	/*
+	 * login user for application
+	 */
 	@PostMapping("login/user")
 	@ApiOperation(value = "Login user", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login user successfully") })
@@ -66,15 +79,22 @@ public class HotelReservationController {
 
 	}
 
+	/*
+	 * search room for the hotel booking
+	 */
 	@PostMapping("search/rooms")
 	@ApiOperation(value = "Search rooms", response = RoomSearchResponses.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Fetch rooms successfully") })
-	public ResponseEntity<RoomSearchResponses> searchRoom(@RequestBody RoomSearchRequest request) throws HotelReservationException {
+	public ResponseEntity<RoomSearchResponses> searchRoom(@RequestBody RoomSearchRequest request)
+			throws HotelReservationException {
 		RoomSearchResponses response = service.searchRoom(request);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 
+	/*
+	 * book room of the hotel
+	 */
 	@PostMapping("book/room")
 	@ApiOperation(value = "Search rooms", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Fetch rooms successfully") })
@@ -84,6 +104,9 @@ public class HotelReservationController {
 
 	}
 
+	/*
+	 * add room type by admin of the hotel
+	 */
 	@PostMapping("add/room_type")
 	@ApiOperation(value = "Add room type", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Add room type successfully") })
@@ -94,6 +117,9 @@ public class HotelReservationController {
 
 	}
 
+	/*
+	 * view booking report of the hotel
+	 */
 	@GetMapping("view/booking_report")
 	@ApiOperation(value = "Add room type", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Fetch booking records successfully") })

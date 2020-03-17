@@ -13,18 +13,23 @@ import com.hotel.reservation.bean.Room;
 import com.hotel.reservation.dto.request.BookRoomRequest;
 import com.hotel.reservation.utils.BookingStatus;
 
+/**
+ * @author arti
+ *
+ */
+
 @Repository
 public interface RoomRepository extends ElasticsearchRepository<Room, String> {
 
 	List<Room> findByHotelIdIn(Iterable<String> hotelIds);
 
-	Room findByRoomNoAndRoomType(Integer roomNo, String roomType);
+	Room findByRoomIdAndRoomType(Integer roomNo, String roomType);
 
 	default List<Room> getBookableRoom(BookRoomRequest request) {
 		BoolQueryBuilder queryFinal = QueryBuilders.boolQuery();
 		queryFinal.must(QueryBuilders.termQuery("hotelId", request.getHotelId()));
 		queryFinal.must(QueryBuilders.termQuery("roomType", request.getRoomType()));
-		queryFinal.must(QueryBuilders.termQuery("roomNo", request.getRoomNo()));
+		queryFinal.must(QueryBuilders.termQuery("roomNo", request.getRoomId()));
 
 		SearchQuery searchQueryName = new NativeSearchQueryBuilder().withQuery(queryFinal).build();
 		return search(searchQueryName).getContent();

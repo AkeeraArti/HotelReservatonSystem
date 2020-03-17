@@ -4,6 +4,11 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class HotelSearchResponse {
 

@@ -65,10 +65,11 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 	public AccountResponse createAccount(AccountRequest request) throws HotelReservationException {
 
 		AccountResponse response = new AccountResponse();
-
+		// create account for the admin
 		Account newAccount = new Account();
 		Account adminAccount = accountRepository.findByAccountId(request.getOldAccountId());
 		if (!ObjectUtils.isEmpty(adminAccount)) {
+			// check account is already created by super admin for particular hotel
 			if (UserType.SUPER_ADMIN.equals(adminAccount.getUserType())
 					&& !adminAccount.getHotelName().equals(request.getHotelName())) {
 				throw new HotelReservationException("Account for " + request.getHotelName() + " already exist", 4000);
@@ -76,7 +77,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 				newAccount.setAccountName(request.getAccountName());
 				newAccount.setAccountId(UUID.randomUUID().toString());
 				newAccount.setUserType(UserType.ADMIN);
-
+				// based on the user type create new account for new hotel or existing hotel
 				if (UserType.SUPER_ADMIN.equals(adminAccount.getUserType())) {
 					newAccount.setHotelId(UUID.randomUUID().toString());
 					newAccount.setHotelName(request.getHotelName());
@@ -87,6 +88,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 			}
 
 		}
+		// save account
 		accountRepository.save(newAccount);
 		BeanUtils.copyProperties(newAccount, response);
 		return response;
@@ -98,6 +100,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 
 		User User = userRepository.findByEmailId(request.getEmailId());
 		if (!ObjectUtils.isEmpty(User)) {
+			// check user is alreay exist
 			throw new HotelReservationException("User for this " + request.getEmailId() + " already register", 4000);
 		} else {
 			User = new User();
@@ -117,6 +120,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 	@Override
 	public String loginUser(UserLoginRequest request) {
 		User User = userRepository.findByEmailIdAndPassword(request.getEmailId(), request.getPassword());
+		// check user is present or not
 		if (!ObjectUtils.isEmpty(User)) {
 			return "Login successfully";
 		} else {
@@ -128,6 +132,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 	public RoomSearchResponses searchRoom(RoomSearchRequest request) {
 		RoomSearchResponses response = new RoomSearchResponses();
 		List<RoomSearchResponse> roomSearchResponses = new ArrayList<>();
+		// find all the hotels for the destination
 		List<Hotel> hotels = hotelRepository.findByDestination(request.getDestination());
 		Set<String> hotelIds = new HashSet<>();
 		if (!CollectionUtils.isEmpty(hotels)) {
@@ -135,12 +140,15 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 				hotelIds.add(hotel.getId());
 			}
 		}
+		// find all rooms for hotel
 		List<Room> rooms = roomRepository.findByHotelIdIn(hotelIds);
 		if (!CollectionUtils.isEmpty(rooms)) {
 			for (Room room : rooms) {
+				// validate room is available for reservation or not
 				if (isValidRoom(room, request.getRoomType(), request.getCheckInDate(), request.getCheckOutDate())) {
 					RoomSearchResponse roomSearchResponse = new RoomSearchResponse();
 					BeanUtils.copyProperties(roomSearchResponse, room);
+					// add room in the searchable response
 					roomSearchResponses.add(roomSearchResponse);
 				}
 
@@ -150,6 +158,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 
 		if (!CollectionUtils.isEmpty(hotels)) {
 			for (Hotel hotel : hotels) {
+				// add all rooms to appropriate hotel
 				List<RoomSearchResponse> responseRooms = roomSearchResponses.stream()
 						.filter(room -> room.getHotelId().equals(hotel.getId())).collect(Collectors.toList());
 				if (!CollectionUtils.isEmpty(responseRooms)) {
@@ -167,6 +176,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 
 	}
 
+	// check is room is avaiable for booking
 	private boolean isValidRoom(Room room, String requestedRoomType, Date requestedCheckin, Date requestedCheckout) {
 		boolean isvalidRoom = false;
 		if (room.getRoomType().toLowerCase().equals(requestedRoomType)) {
@@ -188,6 +198,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 
 	@Override
 	public String bookRoom(BookRoomRequest request) {
+		// fetch all bookable rooms
 		List<Room> rooms = roomRepository.getBookableRoom(request);
 		Room bookedRoom = new Room();
 		boolean isbookable = true;
@@ -200,6 +211,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 			if (isbookable) {
 				BeanUtils.copyProperties(rooms, request);
 				bookedRoom.setBookedBy(request.getEmailId());
+				// book the room
 				bookedRoom = roomRepository.save(bookedRoom);
 			}
 		}
@@ -215,11 +227,12 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 	@Override
 	public String addRoomType(CreateRoomTypeRequest request) throws HotelReservationException {
 		Account Account = accountRepository.findByAccountIdAndHotelId(request.getAccountId(), request.getHotelId());
+		// check account is valid
 		if (ObjectUtils.isEmpty(Account) || !UserType.ADMIN.equals(Account.getUserType())) {
 			throw new HotelReservationException("Add room type is not allow for this account " + request.getAccountId()
 					+ " or hotelId " + request.getHotelId(), 4000);
 		} else {
-			Room room = roomRepository.findByRoomNoAndRoomType(request.getRoomNo(), request.getRoomType());
+			Room room = roomRepository.findByRoomIdAndRoomType(request.getRoomId(), request.getRoomType());
 			if (!ObjectUtils.isEmpty(room)) {
 				throw new HotelReservationException(
 						"Room type is already exist. Please choose other room no or update this room", 4000);
@@ -227,6 +240,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 				room = new Room();
 				BeanUtils.copyProperties(request, room);
 				room.setStatus(BookingStatus.AVAILABLE);
+				// add room type
 				room = roomRepository.save(room);
 				if (ObjectUtils.isEmpty(room)) {
 					return "Room type added successfully";
@@ -243,10 +257,12 @@ public class HotelReservationServiceImpl implements HotelReservationService {
 		BookingReportResponse response = new BookingReportResponse();
 		List<BookedRoomResponse> bookedRoomResponseList = new ArrayList<>();
 		Account Account = accountRepository.findByAccountIdAndHotelId(accountId, hotelId);
+		// check account is valid
 		if (ObjectUtils.isEmpty(Account) || !UserType.ADMIN.equals(Account.getUserType())) {
 			throw new HotelReservationException(
 					"View booking report not allowed for account id " + accountId + " and hotel id" + hotelId, 4000);
 		} else {
+			// get booked room record
 			List<Room> bookedRoomRecords = roomRepository.getBookedRoom(hotelId);
 			if (!CollectionUtils.isEmpty(bookedRoomRecords)) {
 				for (Room bookedRoomRecord : bookedRoomRecords) {

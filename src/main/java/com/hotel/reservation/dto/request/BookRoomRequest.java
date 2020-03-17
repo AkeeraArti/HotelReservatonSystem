@@ -4,6 +4,11 @@ import java.util.Date;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class BookRoomRequest {
 
@@ -17,6 +22,6 @@ public class BookRoomRequest {
 
 	private Date checkOutDate;
 
-	private Integer roomNo;
+	private Integer roomId;
 
 }

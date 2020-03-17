@@ -1,0 +1,34 @@
+PUT account?include_type_name=true
+{
+	"settings": {
+		"number_of_shards": 5
+	},
+	"mappings": {
+		"_doc": {
+			"date_detection": false,
+			"properties": {
+				"accountId": {
+					"type": "text",
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"accountName": {
+					"type": "keyword"
+				},
+				"hotelId": {
+					"type": "keyword"
+				},
+				"hotelName": {
+					"type": "keyword"
+				},
+				"userType": {
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}

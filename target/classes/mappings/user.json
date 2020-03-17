@@ -1,0 +1,37 @@
+PUT user?include_type_name=true
+{
+	"settings": {
+		"number_of_shards": 5
+	},
+	"mappings": {
+		"_doc": {
+			"date_detection": false,
+			"properties": {
+				"userId": {
+					"type": "text",
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"userName": {
+					"type": "keyword"
+				},
+				"emailId": {
+					"type": "keyword"
+				},
+				"password": {
+					"type": "keyword"
+				},
+				"mobileNo": {
+					"type": "Long"
+				},
+				"userType": {
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}
