@@ -13,6 +13,11 @@ import com.hotel.reservation.dto.response.BookingReportResponse;
 import com.hotel.reservation.dto.response.RoomSearchResponses;
 import com.hotel.reservation.exception.HotelReservationException;
 
+/**
+ * @author arti
+ *
+ */
+
 @Service
 public interface HotelReservationService {
 

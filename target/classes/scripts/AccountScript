@@ -1,0 +1,8 @@
+PUT account/_doc/628ae741-4104-4112-b338-7c3d89c0002h
+{
+          "accountId" : "628ae741-4104-4112-b338-7c3d89c0002h",
+          "accountName" : "Super Admin Account",
+          "hotelId" : "2d86b5f7-60bf-44f9-9dda-650c3a58e2a0",
+          "hotelName" : "Paradize",
+          "userType":"super admin"
+}

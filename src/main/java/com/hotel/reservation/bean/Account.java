@@ -9,6 +9,11 @@ import com.hotel.reservation.utils.UserType;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 @Document(indexName = "account", type = "_doc", createIndex = false)
 public class Account implements Serializable {

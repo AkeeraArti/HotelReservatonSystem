@@ -4,12 +4,17 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class CreateRoomTypeRequest implements Serializable {
 
 	private String roomType;
 
-	private Integer roomNo;
+	private Integer roomId;
 
 	private String hotelId;
 

@@ -9,14 +9,19 @@ import com.hotel.reservation.utils.BookingStatus;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
-@Document(indexName = "room",type = "_doc", createIndex = false)
+@Document(indexName = "room", type = "_doc", createIndex = false)
 public class Room {
 
 	@Id
-	private String roomType;
+	private Integer roomId;
 
-	private Integer roomNo;
+	private String roomType;
 
 	private BookingStatus status;
 

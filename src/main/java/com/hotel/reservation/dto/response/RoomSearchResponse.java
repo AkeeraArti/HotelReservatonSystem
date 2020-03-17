@@ -6,12 +6,17 @@ import com.hotel.reservation.utils.BookingStatus;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class RoomSearchResponse {
 
 	private String roomType;
 
-	private Integer roomNo;
+	private Integer roomId;
 
 	private Double price;
 

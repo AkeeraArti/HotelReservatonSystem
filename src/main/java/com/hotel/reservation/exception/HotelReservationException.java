@@ -2,6 +2,11 @@ package com.hotel.reservation.exception;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class HotelReservationException extends Exception {
 

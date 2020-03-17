@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.hotel.reservation.bean.User;
 
+/**
+ * @author arti
+ *
+ */
+
 @Repository
 public interface UserRepository extends ElasticsearchRepository<User, String> {
 

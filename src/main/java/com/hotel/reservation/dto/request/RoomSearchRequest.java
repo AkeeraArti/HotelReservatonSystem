@@ -5,6 +5,11 @@ import java.util.Date;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class RoomSearchRequest implements Serializable {
 

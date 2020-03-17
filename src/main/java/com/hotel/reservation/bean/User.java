@@ -1,6 +1,12 @@
 package com.hotel.reservation.bean;
 
 import org.springframework.data.annotation.Id;
+
+/**
+ * @author arti
+ *
+ */
+
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import com.hotel.reservation.utils.UserType;

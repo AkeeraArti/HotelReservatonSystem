@@ -6,6 +6,11 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * @author arti
+ *
+ */
+
 @Data
 public class UserRegisterRequest implements Serializable {
 

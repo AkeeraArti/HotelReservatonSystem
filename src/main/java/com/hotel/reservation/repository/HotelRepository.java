@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.hotel.reservation.bean.Hotel;
 
+/**
+ * @author arti
+ *
+ */
+
 @Repository
 public interface HotelRepository extends ElasticsearchRepository<Hotel, String> {
 
